@@ -22,6 +22,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // LangChain4j (IA) -  https://docs.langchain4j.dev/get-started
+    // Agregamos las dependencias para hacer uso de IA de open ai y springboot, en su
+    // version demo gratuita
+    implementation 'dev.langchain4j:langchain4j-open-ai-spring-boot-starter:1.0.0-beta1'
+    implementation 'dev.langchain4j:langchain4j-spring-boot-starter:1.0.0-beta1'
 }
 
 tasks.named('test') {
