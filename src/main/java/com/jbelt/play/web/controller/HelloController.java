@@ -1,5 +1,6 @@
-package com.jbelt.play;
+package com.jbelt.play.web.controller;
 
+import com.jbelt.play.domain.services.PlayAiService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,9 +19,9 @@ public class HelloController {
         this.aiService = aiService;
     }
 
-    //Metodo que retorna un saludo
+    //Metodo que retorna un saludo en http://localhost:8090/play/api/hello
     //GetMapping indica que recibe peticion de tipo get
-    @GetMapping("/")
+    @GetMapping("/hello ")
     public String hello(){
         return this.aiService.generateGreeting(plataform);
     }

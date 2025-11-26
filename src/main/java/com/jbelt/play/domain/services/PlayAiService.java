@@ -1,4 +1,4 @@
-package com.jbelt.play;
+package com.jbelt.play.domain.services;
 
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
