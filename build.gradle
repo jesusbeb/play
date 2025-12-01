@@ -23,6 +23,13 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    //Dependencias de JPA para acceder a los datos
+    //Dependencia de Docker Compose que solo funciona en entorno de desarrollo
+    //Driver de postgresql
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+    runtimeOnly 'org.postgresql:postgresql'
+
     // LangChain4j (IA) -  https://docs.langchain4j.dev/get-started
     // Agregamos las dependencias para hacer uso de IA de open ai y springboot, en su
     // version demo gratuita

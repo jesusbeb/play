@@ -1,0 +1,25 @@
+# Este archivo se copio despues de dar clic en Explore, al momento de obtener las dependencias en start.spring.io,
+# originalmente se llama compose.yaml y es el archivo de configuracion de la BD para la app
+# image: se usara la ultima
+# restart: sirve para que se reinicie si se apaga o falla, pero no cuando se detenga manualmente
+# En environment se crea el nombre de la BD, un password y un usuario
+# en ports: '5432' se mapea para que el puerto local sea el mismo '5432:5432'
+# agregamos volumes: y la direccion donde persistiran los datos
+# *Al correr la app, debemos tener abierto Docker o Docker Desktop
+
+#Se exportan los servicios
+services:
+  postgres:
+    image: 'postgres:latest'
+    restart: unless-stopped
+    environment:
+      - 'POSTGRES_DB=play_db'
+      - 'POSTGRES_PASSWORD=secret'
+      - 'POSTGRES_USER=myuser'
+    ports:
+      - '5432:5432'
+    volumes:
+      - pgdata:/data/postgres
+# Se importan los volumenes
+volumes:
+  pgdata:
