@@ -1,5 +1,7 @@
 package com.jbelt.play.domain.dto;
 
+import com.jbelt.play.domain.Genre;
+
 import java.time.LocalDate;
 
 // Clase record, es inmutable y nos sirve para representar los datos expuestos. Internamente crea constructores,
@@ -7,7 +9,7 @@ import java.time.LocalDate;
 public record MovieDto(
         String title,
         Integer duration,
-        String genre,
+        Genre genre,
         LocalDate releaseDate,
         Double rating
 ) {
