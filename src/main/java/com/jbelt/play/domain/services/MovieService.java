@@ -26,4 +26,9 @@ public class MovieService {
         return this.movieRepository.getById(id);
     }
 
+    // Metodo para agregar una nueva pelicula
+    public MovieDto add(MovieDto movieDto) {
+        return this.movieRepository.save(movieDto);
+    }
+
 }

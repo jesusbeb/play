@@ -2,6 +2,7 @@ package com.jbelt.play.persistence.mapper;
 
 import com.jbelt.play.domain.dto.MovieDto;
 import com.jbelt.play.persistence.Entity.MovieEntity;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -27,5 +28,12 @@ public interface MovieMapper {
 
     //Metodo toDto para obtener una Lista de DTO's, recibe un Iterable de Entity
     List<MovieDto> toDto(Iterable<MovieEntity> entities);
+
+    // Metodo que convierte un DTO a un Entity
+    // @InheritConfiguration va a tomar todos los @Mapping con el source y el target invertidos
+    // Solo indicamos nuevamente el Mapping de genre para especificar que qualifiedByName va a usar
+    @InheritInverseConfiguration
+    @Mapping(source = "genre", target = "genero", qualifiedByName = "genreToString")
+    MovieEntity toEntity(MovieDto dto);
 
 }

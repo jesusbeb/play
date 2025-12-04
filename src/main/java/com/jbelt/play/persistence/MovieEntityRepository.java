@@ -36,6 +36,17 @@ public class MovieEntityRepository implements MovieRepository {
         MovieEntity movieEntity = this.crudMovieEntity.findById(id).orElse(null);
         return this.movieMapper.toDto(movieEntity);
     }
+
+    // Metodo para guardar una pelicula en la BD
+    // El DTO que se recibe se convierte a Entity con movieMapper
+    // Retornamos un DTO de la pelicula Entity que se guarda en la BD
+    @Override
+    public MovieDto save(MovieDto movieDto) {
+        MovieEntity movieEntity = this.movieMapper.toEntity(movieDto);
+        movieEntity.setEstado("D"); // D de Disponible
+
+        return this.movieMapper.toDto(this.crudMovieEntity.save(movieEntity));
+    }
 }
 
 

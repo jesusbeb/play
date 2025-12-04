@@ -6,7 +6,9 @@ import java.time.LocalDate;
 
 // Clase record, es inmutable y nos sirve para representar los datos expuestos. Internamente crea constructores,
 // y metodos de acceso. Creamos los atributos en inglés porque asi respondera la API
+// Agregamos el atributo id, pero no es necesario mapearlo con MovieMapper ya que en el Entity y en el DTO se llaman igual
 public record MovieDto(
+        Long id,
         String title,
         Integer duration,
         Genre genre,

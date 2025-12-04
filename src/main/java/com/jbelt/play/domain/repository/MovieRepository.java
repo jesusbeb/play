@@ -12,4 +12,7 @@ public interface MovieRepository {
 
     // Metodo para retornar una pelicula por ID
     MovieDto getById(long id);
+
+    // Metodo para guardar una pelicula
+    MovieDto save(MovieDto movieDto);
 }

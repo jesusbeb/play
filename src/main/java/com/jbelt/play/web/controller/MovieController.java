@@ -2,11 +2,10 @@ package com.jbelt.play.web.controller;
 
 import com.jbelt.play.domain.dto.MovieDto;
 import com.jbelt.play.domain.services.MovieService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -44,6 +43,16 @@ public class MovieController {
             return ResponseEntity.notFound().build(); // 404
         }
         return ResponseEntity.ok(movieDto); // 200
+    }
+
+    // @RequestBody para indicar que el parametro vendra en el cuerpo de la peticion
+    // No usamos ResponseEntity.created porque no tenmos una URI, por lo que usamos .status y
+    // le enviamos un enum de Spring con el valor CREATED y el cuerpo de la respuesta es
+    // la pelicula que se guardo en la BD
+    @PostMapping
+    public ResponseEntity<MovieDto> add(@RequestBody MovieDto movieDto) {
+        MovieDto movieDtoResponse = this.movieService.add(movieDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(movieDtoResponse); // 201
     }
 
 }
