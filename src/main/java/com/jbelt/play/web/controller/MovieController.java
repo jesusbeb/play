@@ -2,6 +2,7 @@ package com.jbelt.play.web.controller;
 
 import com.jbelt.play.domain.dto.MovieDto;
 import com.jbelt.play.domain.services.MovieService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,18 +24,45 @@ public class MovieController {
     }
 
     // Este metodo ya no se le indica el path o prefijo ya que lo recibe de la clase
-    // Por lo que si no se indica responde al prefijo de la clase
+    // Por lo que si no se indica responde al prefijo de la clase ("/movies")
     // GetMapping para indicar que se trata de una solicitud GET y esta accesible en /movies
+    // Se retorna una List<MovieDto> dentro de un ResponseEntity
     @GetMapping
-    public List<MovieDto> getAll(){
-        return this.movieService.getAll();
+    public ResponseEntity< List<MovieDto> > getAll(){
+        return ResponseEntity.ok(this.movieService.getAll());
     }
 
-    // Metodo que retorna una movie por su id
+    // Metodo que retorna un ResponseEntity con un MovieDto dentro
     // @PathVariable para indicar que el parametro viene en una variable dentro del Path
+    // if movieDto es null, retornamos un ResponseEntity.notFound
+    // Y si la pelicula se encontro, se retorna el movieDto dentro de un ResponseEntity.ok
     @GetMapping("/{id}")
-    public MovieDto getById(@PathVariable long id) {
-        return this.movieService.getById(id);
+    public ResponseEntity<MovieDto> getById(@PathVariable long id) {
+        MovieDto movieDto = this.movieService.getById(id);
+
+        if (movieDto == null) {
+            return ResponseEntity.notFound().build(); // 404
+        }
+        return ResponseEntity.ok(movieDto); // 200
     }
 
 }
+
+
+
+/*
+En el desarrollo backend, responder con el código HTTP adecuado es esencial para comunicar correctamente el
+resultado de cada petición en tu API. Esta práctica incrementa la claridad, profesionalismo y permite a
+clientes interpretar con precisión cada respuesta, conforme al estándar de la web.
+
+¿Qué son los códigos HTTP y por qué son importantes?
+Los códigos HTTP son valores numéricos estándar que indican el resultado de una petición entre un cliente y un servidor.
+
+- El 200 muestra que la solicitud fue exitosa.
+- El 201 indica que se creó un recurso nuevo.
+- El 400 señala una petición incorrecta.
+- El 404 se refiere a recursos no encontrados.
+- El 500 marca errores internos del servidor.
+
+Utilizar estos códigos correctamente guía a quienes consumen tu API sobre lo que realmente ocurrió con cada solicitud. Así, tu backend envía respuestas precisas y profesionales.
+ */
