@@ -2,6 +2,7 @@ package com.jbelt.play.persistence;
 
 import com.jbelt.play.domain.dto.MovieDto;
 import com.jbelt.play.domain.repository.MovieRepository;
+import com.jbelt.play.persistence.Entity.MovieEntity;
 import com.jbelt.play.persistence.crud.CrudMovieEntity;
 import com.jbelt.play.persistence.mapper.MovieMapper;
 import org.springframework.stereotype.Repository;
@@ -25,6 +26,15 @@ public class MovieEntityRepository implements MovieRepository {
     @Override
     public List<MovieDto> getAll() {
         return this.movieMapper.toDto(this.crudMovieEntity.findAll());
+    }
+
+    // Obtenemos una pelicula por id capturandola en un MovieEntity que retorna el metodo findById de
+    // crudMovieEntity y como es un opcional, usamos orElse para asignar null en caso de no encontrarlo
+    // Despues hacemos uso de movieMapper para convertirla a un DTO
+    @Override
+    public MovieDto getById(long id) {
+        MovieEntity movieEntity = this.crudMovieEntity.findById(id).orElse(null);
+        return this.movieMapper.toDto(movieEntity);
     }
 }
 

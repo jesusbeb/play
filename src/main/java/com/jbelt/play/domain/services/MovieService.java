@@ -21,4 +21,9 @@ public class MovieService {
         return this.movieRepository.getAll();
     }
 
+    // Metodo para retornar una pelicula por id
+    public MovieDto getById(long id) {
+        return this.movieRepository.getById(id);
+    }
+
 }

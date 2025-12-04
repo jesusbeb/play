@@ -9,4 +9,7 @@ public interface MovieRepository {
 
     // Metodo para retornar todas las peliculas de la BD
     List<MovieDto> getAll();
+
+    // Metodo para retornar una pelicula por ID
+    MovieDto getById(long id);
 }
