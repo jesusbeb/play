@@ -1,10 +1,12 @@
 package com.jbelt.play.persistence.mapper;
 
 import com.jbelt.play.domain.dto.MovieDto;
+import com.jbelt.play.domain.dto.UpdateMovieDto;
 import com.jbelt.play.persistence.Entity.MovieEntity;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
@@ -35,5 +37,14 @@ public interface MovieMapper {
     @InheritInverseConfiguration
     @Mapping(source = "genre", target = "genero", qualifiedByName = "genreToString")
     MovieEntity toEntity(MovieDto dto);
+
+    // Metodo que no retorna nada. Actualiza un Entity existente con los datos que vienen de un DTO
+    // Recibe un DTO, y con @MappingTarget le decimos que reciba el Entity por
+    // referencia (no cree un nuevo Entity, que use el mismo para actualizarlo, le aplique el mapeo).
+    // Con Mapping especificamos que propiedad del DTO (source) se copiara a que propiedad del Entity (target)
+    @Mapping(target = "titulo", source = "title")
+    @Mapping(target = "fechaEstreno", source = "releaseDate")
+    @Mapping(target = "clasificacion", source = "rating")
+    void updateEntityFromDto(UpdateMovieDto updateMovieDto, @MappingTarget MovieEntity movieEntity);
 
 }

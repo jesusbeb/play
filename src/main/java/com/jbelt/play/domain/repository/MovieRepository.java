@@ -1,6 +1,7 @@
 package com.jbelt.play.domain.repository;
 
 import com.jbelt.play.domain.dto.MovieDto;
+import com.jbelt.play.domain.dto.UpdateMovieDto;
 
 import java.util.List;
 
@@ -15,4 +16,7 @@ public interface MovieRepository {
 
     // Metodo para guardar una pelicula
     MovieDto save(MovieDto movieDto);
+
+    // Metodo para actualizar una pelicula
+    MovieDto update(long id, UpdateMovieDto updateMovieDto);
 }

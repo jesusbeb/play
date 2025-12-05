@@ -1,6 +1,7 @@
 package com.jbelt.play.domain.services;
 
 import com.jbelt.play.domain.dto.MovieDto;
+import com.jbelt.play.domain.dto.UpdateMovieDto;
 import com.jbelt.play.domain.repository.MovieRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,11 @@ public class MovieService {
     // Metodo para agregar una nueva pelicula
     public MovieDto add(MovieDto movieDto) {
         return this.movieRepository.save(movieDto);
+    }
+
+    // Metodo para actualizar una pelicula
+    public MovieDto update(long id, UpdateMovieDto updateMovieDto){
+        return this.movieRepository.update(id, updateMovieDto);
     }
 
 }

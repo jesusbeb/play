@@ -1,6 +1,7 @@
 package com.jbelt.play.web.controller;
 
 import com.jbelt.play.domain.dto.MovieDto;
+import com.jbelt.play.domain.dto.UpdateMovieDto;
 import com.jbelt.play.domain.services.MovieService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -53,6 +54,14 @@ public class MovieController {
     public ResponseEntity<MovieDto> add(@RequestBody MovieDto movieDto) {
         MovieDto movieDtoResponse = this.movieService.add(movieDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(movieDtoResponse); // 201
+    }
+
+    // Metodo para actualizar una pelicula, recibe el id por PathVariable y
+    // los datos a actualizar en el cuerpo del Request
+    // Retorna un ResponseEntity y adentro el MovieDto actualizado
+    @PutMapping("/{id}")
+    public ResponseEntity<MovieDto> update(@PathVariable long id, @RequestBody UpdateMovieDto updateMovieDto) {
+        return ResponseEntity.ok(this.movieService.update(id, updateMovieDto));
     }
 
 }

@@ -1,12 +1,14 @@
 package com.jbelt.play.persistence;
 
 import com.jbelt.play.domain.dto.MovieDto;
+import com.jbelt.play.domain.dto.UpdateMovieDto;
 import com.jbelt.play.domain.repository.MovieRepository;
 import com.jbelt.play.persistence.Entity.MovieEntity;
 import com.jbelt.play.persistence.crud.CrudMovieEntity;
 import com.jbelt.play.persistence.mapper.MovieMapper;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 // Esta clase implementa MovieRepository
@@ -47,6 +49,27 @@ public class MovieEntityRepository implements MovieRepository {
 
         return this.movieMapper.toDto(this.crudMovieEntity.save(movieEntity));
     }
+
+    // Buscamos la movieEntity en la BD por el id que llega
+    // Si encontramos la pelicula, pasamos los datos que vienen de updateMovieDto al movieEntity
+    // Al final guardamos el Entity actualizado en la BD y lo retornamos como DTO
+    @Override
+    public MovieDto update(long id, UpdateMovieDto updateMovieDto) {
+        MovieEntity movieEntity = this.crudMovieEntity.findById(id).orElse(null);
+
+        if (movieEntity == null) return null;
+
+//        movieEntity.setTitulo(updateMovieDto.title());
+//        movieEntity.setFechaEstreno(updateMovieDto.releaseDate());
+//        movieEntity.setClasificacion(BigDecimal.valueOf(updateMovieDto.rating()));
+//        // Otra forma de hacer lo anterior para pasar los datos al Entity desde un DTO,
+//        // es hacer un metodo con MapStruct: (Este metodo recibe por referencia a movieEntity,
+//        // por eso no se asigna el resultado, ademas que el metodo no retorna nada)
+
+        this.movieMapper.updateEntityFromDto(updateMovieDto, movieEntity);
+        return this.movieMapper.toDto(this.crudMovieEntity.save(movieEntity));
+    }
+
 }
 
 
