@@ -19,4 +19,6 @@ public interface MovieRepository {
 
     // Metodo para actualizar una pelicula
     MovieDto update(long id, UpdateMovieDto updateMovieDto);
+
+    void delete(long id);
 }
