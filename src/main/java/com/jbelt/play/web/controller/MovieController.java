@@ -1,10 +1,11 @@
 package com.jbelt.play.web.controller;
 
 import com.jbelt.play.domain.dto.MovieDto;
+import com.jbelt.play.domain.dto.SuggestRequestDto;
 import com.jbelt.play.domain.dto.UpdateMovieDto;
 import com.jbelt.play.domain.services.MovieService;
+import com.jbelt.play.domain.services.PlayAiService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,11 +17,14 @@ import java.util.List;
 @RequestMapping("/movies")
 public class MovieController {
     // Inyeccion de MovieService como constante porque no cambiara tras inicializarse
+    // Inyeccion de PlayAiService para usar la IA
     private final MovieService movieService;
+    private final PlayAiService playAiService;
 
     // Constructor para inicializar el MovieService
-    public MovieController(MovieService movieService) {
+    public MovieController(MovieService movieService, PlayAiService playAiService) {
         this.movieService = movieService;
+        this.playAiService = playAiService;
     }
 
     // Este metodo ya no se le indica el path o prefijo ya que lo recibe de la clase
@@ -44,6 +48,15 @@ public class MovieController {
             return ResponseEntity.notFound().build(); // 404
         }
         return ResponseEntity.ok(movieDto); // 200
+    }
+
+    // Metodo endpoint donde se obtendran las sugerencias de la IA en un String dentro del ResponseEntity
+    // El propmt que se envia a la IA para obtener su sugerencia se recibe en el cuerpo del request desde un json
+    // p.e. { "userPreferences": "prompt con solicitud de sugerencia de peliculas" } al recibirlo se pasa a un
+    // suggestRequestDto, se llama al metodo dentro de playAiService y se le envia el atributo userPreferences
+    @PostMapping("/suggest")
+    public ResponseEntity<String> generateMoviesSuggestion(@RequestBody SuggestRequestDto suggestRequestDto) {
+        return ResponseEntity.ok(this.playAiService.generateMoviesSuggestion(suggestRequestDto.userPreferences()));
     }
 
     // @RequestBody para indicar que el parametro vendra en el cuerpo de la peticion

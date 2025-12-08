@@ -3,6 +3,7 @@ package com.jbelt.play.domain.services;
 import com.jbelt.play.domain.dto.MovieDto;
 import com.jbelt.play.domain.dto.UpdateMovieDto;
 import com.jbelt.play.domain.repository.MovieRepository;
+import dev.langchain4j.agent.tool.Tool;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public class MovieService {
     }
 
     // Metodo para retornar List<MovieDTO>
+    // Anotamos con @Tool de langchain4j para que la IA sepa en que momento debera usar este metodo
+    @Tool("Busca todas las peliculas que existan dentro de la plataforma")
     public List<MovieDto> getAll(){
         return this.movieRepository.getAll();
     }
