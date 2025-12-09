@@ -7,4 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 // realizar operaciones en la BD sin escribir codigo SQL
 //Recibe dos elementos genericos, nombre del Entity y tipo de dato de su clave primaria
 public interface CrudMovieEntity extends CrudRepository<MovieEntity, Long> {
+
+    // QueryMethod que retorna un MovieEntity y recibe un String
+    MovieEntity findFirstByTitulo(String titulo);
 }

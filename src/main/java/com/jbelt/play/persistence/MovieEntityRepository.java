@@ -2,6 +2,7 @@ package com.jbelt.play.persistence;
 
 import com.jbelt.play.domain.dto.MovieDto;
 import com.jbelt.play.domain.dto.UpdateMovieDto;
+import com.jbelt.play.domain.exception.MovieAlreadyExistsException;
 import com.jbelt.play.domain.repository.MovieRepository;
 import com.jbelt.play.persistence.Entity.MovieEntity;
 import com.jbelt.play.persistence.crud.CrudMovieEntity;
@@ -44,6 +45,13 @@ public class MovieEntityRepository implements MovieRepository {
     // Retornamos un DTO de la pelicula Entity que se guarda en la BD
     @Override
     public MovieDto save(MovieDto movieDto) {
+
+        // Buscamos si en la BD ya existe una pelicula con el mismo nombre, de ser asi
+        // lanzamos un exception y enviamos el titulo de la pelicula
+        if (this.crudMovieEntity.findFirstByTitulo(movieDto.title()) != null){
+            throw new MovieAlreadyExistsException(movieDto.title());
+        }
+
         MovieEntity movieEntity = this.movieMapper.toEntity(movieDto);
         movieEntity.setEstado("D"); // D de Disponible
 
