@@ -5,6 +5,11 @@ import com.jbelt.play.domain.dto.SuggestRequestDto;
 import com.jbelt.play.domain.dto.UpdateMovieDto;
 import com.jbelt.play.domain.services.MovieService;
 import com.jbelt.play.domain.services.PlayAiService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +19,10 @@ import java.util.List;
 
 //RestController para indicar que los metodos de esta clase seran expuestos a traves de la API
 // RequestMapping para indicar que todo el controlador tendra el prejijo /movies
+// @Tag es para agregar etiquetas para los titulos que aparecen en la documentacion
 @RestController
 @RequestMapping("/movies")
+@Tag(name = "Movies", description = "Operation about movies of Play!")
 public class MovieController {
     // Inyeccion de MovieService como constante porque no cambiara tras inicializarse
     // Inyeccion de PlayAiService para usar la IA
@@ -41,8 +48,20 @@ public class MovieController {
     // @PathVariable para indicar que el parametro viene en una variable dentro del Path
     // if movieDto es null, retornamos un ResponseEntity.notFound
     // Y si la pelicula se encontro, se retorna el movieDto dentro de un ResponseEntity.ok
+    // @Operation para agregar titulos y explicaciones en la documentacion, en el metodo getById
+    // @ApiResponse para describir los codigos que puede retornar el metodo y una descripcion de esos codigos
+    // content = @Content para que en la documentacion no aparezca que retorna un contenido o cuerpo, sino vacio
+    // @Parameter para una descripcion en la documentacion y un ejemplo de parametro por default
     @GetMapping("/{id}")
-    public ResponseEntity<MovieDto> getById(@PathVariable long id) {
+    @Operation(
+            summary = "Obtener una pelicula por su ID",
+            description = "Retorna la pelicula que coincida con el identificador enviado",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Pelicula encontrada"),
+                    @ApiResponse(responseCode = "404", description = "Pelicula no encontrada", content = @Content)
+            }
+    )
+    public ResponseEntity<MovieDto> getById(@Parameter(description = "Identificador de la pelicula a recuperar", example = "9") @PathVariable long id) {
         MovieDto movieDto = this.movieService.getById(id);
 
         if (movieDto == null) {
