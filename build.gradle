@@ -23,6 +23,9 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+    // Validation. Para la validacion de datos que llegan a los endpoint
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
     //Dependencias de JPA para acceder a los datos
     //Dependencia de Docker Compose que solo funciona en entorno de desarrollo
     //Driver de postgresql

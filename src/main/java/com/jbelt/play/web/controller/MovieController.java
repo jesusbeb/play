@@ -5,6 +5,7 @@ import com.jbelt.play.domain.dto.SuggestRequestDto;
 import com.jbelt.play.domain.dto.UpdateMovieDto;
 import com.jbelt.play.domain.services.MovieService;
 import com.jbelt.play.domain.services.PlayAiService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -72,8 +73,9 @@ public class MovieController {
     // Metodo para actualizar una pelicula, recibe el id por PathVariable y
     // los datos a actualizar en el cuerpo del Request
     // Retorna un ResponseEntity y adentro el MovieDto actualizado
+    // @Valid sirve para validar los datos que llegan en el UpdateMovieDto
     @PutMapping("/{id}")
-    public ResponseEntity<MovieDto> update(@PathVariable long id, @RequestBody UpdateMovieDto updateMovieDto) {
+    public ResponseEntity<MovieDto> update(@PathVariable long id, @RequestBody @Valid UpdateMovieDto updateMovieDto) {
         return ResponseEntity.ok(this.movieService.update(id, updateMovieDto));
     }
 
