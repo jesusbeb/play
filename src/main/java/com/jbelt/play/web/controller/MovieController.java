@@ -65,7 +65,7 @@ public class MovieController {
     // le enviamos un enum de Spring con el valor CREATED y el cuerpo de la respuesta es
     // la pelicula que se guardo en la BD
     @PostMapping
-    public ResponseEntity<MovieDto> add(@RequestBody MovieDto movieDto) {
+    public ResponseEntity<MovieDto> add(@RequestBody @Valid MovieDto movieDto) {
         MovieDto movieDtoResponse = this.movieService.add(movieDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(movieDtoResponse); // 201
     }

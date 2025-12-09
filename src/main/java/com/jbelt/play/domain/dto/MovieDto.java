@@ -1,6 +1,7 @@
 package com.jbelt.play.domain.dto;
 
 import com.jbelt.play.domain.Genre;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
@@ -8,11 +9,24 @@ import java.time.LocalDate;
 // y metodos de acceso. Creamos los atributos en inglés porque asi respondera la API
 // Agregamos el atributo id, pero no es necesario mapearlo con MovieMapper ya que en el Entity y en el DTO se llaman igual
 public record MovieDto(
+
         Long id,
+
+        @NotBlank(message = "El Título es obligatorio")
         String title,
+
+        @Positive(message = "Debe ingresarse la duración (minutos) en numeros positivos")
         Integer duration,
+
+        @NotNull(message = "El género es obligatorio")
         Genre genre,
+
+        @NotNull(message = "Ingrese la fecha de lanzamiento")
+        @PastOrPresent(message = "La fecha de lanzamiento debe ser anterior a la fecha actual")
         LocalDate releaseDate,
+
+        @Min(value = 0, message = "El rating no puede ser menor que 0")
+        @Max(value = 5, message = "El rating no puede ser mayor que 5")
         Double rating
 ) {
 }
