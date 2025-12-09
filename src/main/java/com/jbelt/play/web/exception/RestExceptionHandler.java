@@ -1,6 +1,7 @@
 package com.jbelt.play.web.exception;
 
 import com.jbelt.play.domain.exception.MovieAlreadyExistsException;
+import com.jbelt.play.domain.exception.MovieNotFound;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -19,6 +20,12 @@ public class RestExceptionHandler {
     public ResponseEntity<Error> handleException(MovieAlreadyExistsException ex){
         Error error = new Error("movie-already-exists", ex.getMessage());
         return ResponseEntity.badRequest().body(error);
+    }
+
+    // Excepcion para una pelicula no encontrada por su id
+    @ExceptionHandler(MovieNotFound.class)
+    public ResponseEntity<Error> handleException(MovieNotFound ex){
+        return ResponseEntity.badRequest().body( new Error("movie-not-found", ex.getMessage()) );
     }
 
 }

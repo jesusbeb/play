@@ -3,13 +3,13 @@ package com.jbelt.play.persistence;
 import com.jbelt.play.domain.dto.MovieDto;
 import com.jbelt.play.domain.dto.UpdateMovieDto;
 import com.jbelt.play.domain.exception.MovieAlreadyExistsException;
+import com.jbelt.play.domain.exception.MovieNotFound;
 import com.jbelt.play.domain.repository.MovieRepository;
 import com.jbelt.play.persistence.Entity.MovieEntity;
 import com.jbelt.play.persistence.crud.CrudMovieEntity;
 import com.jbelt.play.persistence.mapper.MovieMapper;
 import org.springframework.stereotype.Repository;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 // Esta clase implementa MovieRepository
@@ -80,6 +80,11 @@ public class MovieEntityRepository implements MovieRepository {
 
     @Override
     public void delete(long id) {
+        MovieEntity movieEntity = this.crudMovieEntity.findById(id).orElse(null);
+
+        if (movieEntity == null){
+            throw new MovieNotFound(id);
+        }
         this.crudMovieEntity.deleteById(id);
     }
 
